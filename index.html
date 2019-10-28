@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>IT WAS THE FINAL COUNTDOWN</title>
+  </head>
+  <body>
+    <p>Days: <span id="days"></span></p>
+    <p>Hours:<span id="hours"></span></p>
+    <p>Minutes:<span id="minutes"></span></p>
+    <p>Seconds:<span id="seconds"></span></p>
+  </body>
+  <!--I put defer so that the page loads first and this won't block the page loading -->
+  <script defer>
+    function countDownClock(en, st) {
+      let daysSpan = document.getElementById("days");
+      let hoursSpan = document.getElementById("hours");
+      let minutesSpan = document.getElementById("minutes");
+      let secondsSpan = document.getElementById("seconds");
+
+      function updateClock(d, e) {
+        let t = parseInt(e) - parseInt(d);
+        let seconds = Math.floor((t / 1000) % 60);
+        let minutes = Math.floor((t / 1000 / 60) % 60);
+        let hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        let days = Math.floor(t / (1000 * 60 * 60 * 24));
+        daysSpan.innerHTML = days;
+        hoursSpan.innerHTML = ("0" + hours).slice(-2);
+        minutesSpan.innerHTML = ("0" + minutes).slice(-2);
+        secondsSpan.innerHTML = ("0" + seconds).slice(-2);
+
+        if (t <= 0) {
+          daysSpan.innerHTML = "00";
+          hoursSpan.innerHTML = "00";
+          minutesSpan.innerHTML = "00";
+          secondsSpan.innerHTML = "00";
+          clearInterval(timeinterval);
+        }
+      }
+      st = Date.parse(st);
+      en = Date.parse(en);
+      updateClock(st, en);
+      timeinterval = setInterval(function() {
+        updateClock(st, en);
+        en = en - 1000;
+      }, 1000);
+    }
+    let today = new Date();
+    let endDay = "October 31 2019 13:13:13";
+    countDownClock(endDay, today);
+  </script>
+</html>
